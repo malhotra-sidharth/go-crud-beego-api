@@ -35,7 +35,7 @@ func main() {
 	name := "default"
 
 	// drop table and re-create
-	force := true
+	force := false
 
 	// print log
 	verbose := true

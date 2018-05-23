@@ -14,5 +14,16 @@ import (
 )
 
 func init() {
+	// hello-world route
 	beego.Router("/", &controllers.HelloController{}, "get:HelloWorld")
+
+	// init namespace
+	ns := beego.NewNamespace("/api/v1",
+
+		// get all users
+		beego.NSRouter("/all", &controllers.UserController{}, "get:GetAllUsers"),
+	)
+
+	// register namespace
+	beego.AddNamespace(ns)
 }

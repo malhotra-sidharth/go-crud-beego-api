@@ -19,3 +19,12 @@ type User struct {
 func init() {
 	orm.RegisterModel(new(User))
 }
+
+// GetAll function gets all users
+func GetAllUsers() []*User {
+	o := orm.NewOrm()
+	var users []*User
+	o.QueryTable(new(User)).All(&users)
+
+	return users
+}
