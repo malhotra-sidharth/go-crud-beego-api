@@ -20,11 +20,36 @@ func init() {
 	orm.RegisterModel(new(User))
 }
 
-// GetAll function gets all users
+// GetAllUsers function gets all users
 func GetAllUsers() []*User {
 	o := orm.NewOrm()
 	var users []*User
 	o.QueryTable(new(User)).All(&users)
 
 	return users
+}
+
+// InsertOneUser inserts a single new User record
+func InsertOneUser(user User) *User {
+	o := orm.NewOrm()
+	qs := o.QueryTable(new(User))
+
+	// get prepared statement
+	i, _ := qs.PrepareInsert()
+
+	var u User
+	// Insert
+	id, err := i.Insert(&user)
+	if err == nil {
+		// successfully inserted
+		u = User{Id: int(id)}
+		err := o.Read(&u)
+		if err == orm.ErrNoRows {
+			return nil
+		}
+	} else {
+		return nil
+	}
+
+	return &u
 }

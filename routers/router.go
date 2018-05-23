@@ -21,7 +21,10 @@ func init() {
 	ns := beego.NewNamespace("/api/v1",
 
 		// get all users
-		beego.NSRouter("/all", &controllers.UserController{}, "get:GetAllUsers"),
+		beego.NSRouter("/user/all", &controllers.UserController{}, "get:GetAllUsers"),
+
+		// add new user
+		beego.NSRouter("/user", &controllers.UserController{}, "post:AddNewUser"),
 	)
 
 	// register namespace
