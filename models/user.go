@@ -44,6 +44,9 @@ func InsertOneUser(user User) *User {
 	hash, _ := hashPassword(user.Password)
 	user.Password = hash
 
+	// get now datetime
+	user.RegDate = time.Now()
+
 	// Insert
 	id, err := i.Insert(&user)
 	if err == nil {
