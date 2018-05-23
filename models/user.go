@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // User represents a person in the system
@@ -38,6 +39,11 @@ func InsertOneUser(user User) *User {
 	i, _ := qs.PrepareInsert()
 
 	var u User
+
+	// hash password
+	hash, _ := hashPassword(user.Password)
+	user.Password = hash
+
 	// Insert
 	id, err := i.Insert(&user)
 	if err == nil {
@@ -52,4 +58,16 @@ func InsertOneUser(user User) *User {
 	}
 
 	return &u
+}
+
+// private function : unexported to hash password
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+// CheckPasswordHash checks hashed password
+func CheckPasswordHash(password string, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
