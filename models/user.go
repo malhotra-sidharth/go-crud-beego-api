@@ -6,13 +6,14 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
+// User represents a person in the system
 type User struct {
-	id        int
-	firstName string
-	lastName  string
-	email     string
-	password  string
-	regDate   time.Time
+	Id        int
+	FirstName string    `orm:"null"`
+	LastName  string    `orm:"null"`
+	Email     string    `orm:"null;unique"`
+	Password  string    `orm:"null"`
+	RegDate   time.Time `orm:"auto_now_add;type(datetime)"`
 }
 
 func init() {

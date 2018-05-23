@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "go-crud-beego-api/models"
 	_ "go-crud-beego-api/routers"
 	"os"
 
