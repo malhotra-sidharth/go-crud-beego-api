@@ -25,6 +25,9 @@ func init() {
 
 		// add new user
 		beego.NSRouter("/user", &controllers.UserController{}, "post:AddNewUser"),
+
+		// update an existing user
+		beego.NSRouter("/user", &controllers.UserController{}, "put:UpdateUser"),
 	)
 
 	// register namespace

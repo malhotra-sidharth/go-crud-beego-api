@@ -26,3 +26,12 @@ func (uc *UserController) AddNewUser() {
 	uc.Data["json"] = user
 	uc.ServeJSON()
 }
+
+// UpdateUser updates an existing user
+func (uc *UserController) UpdateUser() {
+	var u models.User
+	json.Unmarshal(uc.Ctx.Input.RequestBody, &u)
+	user := models.UpdateUser(u)
+	uc.Data["json"] = user
+	uc.ServeJSON()
+}

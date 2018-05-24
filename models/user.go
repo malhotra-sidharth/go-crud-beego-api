@@ -41,8 +41,7 @@ func InsertOneUser(user User) *User {
 	var u User
 
 	// hash password
-	hash, _ := hashPassword(user.Password)
-	user.Password = hash
+	user.Password, _ = hashPassword(user.Password)
 
 	// get now datetime
 	user.RegDate = time.Now()
@@ -61,6 +60,35 @@ func InsertOneUser(user User) *User {
 	}
 
 	return &u
+}
+
+// UpdateUser updates an existing user
+func UpdateUser(user User) *User {
+	o := orm.NewOrm()
+	u := User{Id: user.Id}
+	var updatedUser User
+
+	// get existing user
+	if o.Read(&u) == nil {
+
+		// updated user
+		// hash new password
+		user.Password, _ = hashPassword(user.Password)
+
+		// Keep the old registeration date in case user tries to update it
+		user.RegDate = u.RegDate
+		u = user
+		_, err := o.Update(&u)
+
+		// read updated user
+		if err == nil {
+			// update successful
+			updatedUser = User{Id: user.Id}
+			o.Read(&updatedUser)
+		}
+	}
+
+	return &updatedUser
 }
 
 // private function : unexported to hash password
