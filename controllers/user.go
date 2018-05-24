@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"go-crud-beego-api/models"
+	"strconv"
 
 	"github.com/astaxie/beego"
 )
@@ -33,5 +34,18 @@ func (uc *UserController) UpdateUser() {
 	json.Unmarshal(uc.Ctx.Input.RequestBody, &u)
 	user := models.UpdateUser(u)
 	uc.Data["json"] = user
+	uc.ServeJSON()
+}
+
+// DeleteUser deletes an existing user
+func (uc *UserController) DeleteUser() {
+	// get id from query string and convert it to int
+	id, _ := strconv.Atoi(uc.Ctx.Input.Param(":id"))
+
+	// delete user
+	deleted := models.DeleteUser(id)
+
+	// generate response
+	uc.Data["json"] = map[string]bool{"deleted": deleted}
 	uc.ServeJSON()
 }

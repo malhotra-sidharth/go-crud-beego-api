@@ -28,6 +28,11 @@ func init() {
 
 		// update an existing user
 		beego.NSRouter("/user", &controllers.UserController{}, "put:UpdateUser"),
+
+		// delete a user
+		beego.NSNamespace("/user",
+			beego.NSRouter("/:id", &controllers.UserController{}, "delete:DeleteUser"),
+		),
 	)
 
 	// register namespace

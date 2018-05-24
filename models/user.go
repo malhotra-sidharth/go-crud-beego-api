@@ -91,6 +91,18 @@ func UpdateUser(user User) *User {
 	return &updatedUser
 }
 
+// DeleteUser deletes a user
+func DeleteUser(id int) bool {
+	o := orm.NewOrm()
+	_, err := o.Delete(&User{Id: id})
+	if err == nil {
+		// successfull
+		return true
+	}
+
+	return false
+}
+
 // private function : unexported to hash password
 func hashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
