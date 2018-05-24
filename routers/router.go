@@ -29,9 +29,12 @@ func init() {
 		// update an existing user
 		beego.NSRouter("/user", &controllers.UserController{}, "put:UpdateUser"),
 
-		// delete a user
 		beego.NSNamespace("/user",
+			// delete a user
 			beego.NSRouter("/:id", &controllers.UserController{}, "delete:DeleteUser"),
+
+			// get a user with id
+			beego.NSRouter("/:id", &controllers.UserController{}, "get:GetUserById"),
 		),
 	)
 

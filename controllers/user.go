@@ -49,3 +49,16 @@ func (uc *UserController) DeleteUser() {
 	uc.Data["json"] = map[string]bool{"deleted": deleted}
 	uc.ServeJSON()
 }
+
+// GetUserById gets a single user with the given id
+func (uc *UserController) GetUserById() {
+	// get the id from query string
+	id, _ := strconv.Atoi(uc.Ctx.Input.Param(":id"))
+
+	// get user
+	user := models.GetUserById(id)
+
+	// generate response
+	uc.Data["json"] = user
+	uc.ServeJSON()
+}

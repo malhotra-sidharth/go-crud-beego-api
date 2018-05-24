@@ -103,14 +103,22 @@ func DeleteUser(id int) bool {
 	return false
 }
 
-// private function : unexported to hash password
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
+// GetUserById gets a user with the given id
+func GetUserById(id int) *User {
+	o := orm.NewOrm()
+	user := User{Id: id}
+	o.Read(&user)
+	return &user
 }
 
 // CheckPasswordHash checks hashed password
 func CheckPasswordHash(password string, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+
+// private function : unexported to hash password
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
 }
