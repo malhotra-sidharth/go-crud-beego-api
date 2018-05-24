@@ -20,16 +20,16 @@ func init() {
 	// init namespace
 	ns := beego.NewNamespace("/api/v1",
 
-		// get all users
-		beego.NSRouter("/user/all", &controllers.UserController{}, "get:GetAllUsers"),
-
-		// add new user
-		beego.NSRouter("/user", &controllers.UserController{}, "post:AddNewUser"),
-
-		// update an existing user
-		beego.NSRouter("/user", &controllers.UserController{}, "put:UpdateUser"),
-
 		beego.NSNamespace("/user",
+			// get all users
+			beego.NSRouter("/", &controllers.UserController{}, "get:GetAllUsers"),
+
+			// add new user
+			beego.NSRouter("/", &controllers.UserController{}, "post:AddNewUser"),
+
+			// update an existing user
+			beego.NSRouter("/", &controllers.UserController{}, "put:UpdateUser"),
+
 			// delete a user
 			beego.NSRouter("/:id", &controllers.UserController{}, "delete:DeleteUser"),
 
