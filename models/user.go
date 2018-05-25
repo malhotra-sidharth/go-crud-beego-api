@@ -15,6 +15,7 @@ type User struct {
 	Email     string    `orm:"null;unique"`
 	Password  string    `orm:"null"`
 	RegDate   time.Time `orm:"auto_now_add;type(datetime)"`
+	Detail    []*Detail `orm:"reverse(many)"`
 }
 
 func init() {
